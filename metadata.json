@@ -1,0 +1,9 @@
+{
+    "name" : "Duckietown - Blockly",
+    "description" : "Provides functionalities for controlling a Duckiebot using ROS",
+    "core" : {},
+    "dependencies" : {
+        "system-packages" : [],
+        "packages" : []
+    }
+}
