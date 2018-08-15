@@ -14,13 +14,13 @@ body > #page_container{
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blocks_compressed.js"></script>
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/javascript_compressed.js"></script>
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/python_compressed.js"></script>
-<script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/php_compressed.js"></script>
+<!-- <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/php_compressed.js"></script> -->
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/msg/js/en.js"></script>
 <!-- Code execution logic -->
 <script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'duckietown_blockly') ?>"></script>
 
 
-<div class="btn-group btn-group-justified" role="group" style="margin:auto; margin-bottom:40px; width:970px">
+<div class="btn-group btn-group-justified" role="group" style="margin:auto; margin-bottom:20px; width:970px">
     <a role="button" class="btn btn-success" id="launch_button" name="launch_button" onclick="ExecutionLogicModule.launch_code(2);">
         <i id="launch_button_icon" class="fa fa-play" aria-hidden="true"></i>
         &nbsp;
@@ -53,13 +53,25 @@ body > #page_container{
     </a>
 </div>
 
-<div id="wrapper">
-    <div id="page-wrapper">
-        <div id="blocklyArea" style="height:70vh;"></div>
-    </div>
-</div>
+<table style="width:100%">
+    <tr>
+        <td>
+            <div id="wrapper">
+                <div id="page-wrapper">
+                    <div id="blocklyArea" style="height:58vh;"></div>
+                </div>
+            </div>
+            <div id="blocklyDiv" style="position: absolute"></div>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-top:6px">
+            <p style="margin:0">Execution Log:</p>
+            <textarea id="log_area" style="width:100%; height:12vh; resize:none" readonly></textarea>
+        </td>
+    </tr>
+</table>
 
-<div id="blocklyDiv" style="position: absolute"></div>
 
 <xml id="toolbox" style="display: none">
     <category id="catLogic" name="Logic">
@@ -210,7 +222,7 @@ body > #page_container{
                     <field name="NUM">10</field>
                 </block>
             </value>
-            <value name="TURN_DEGREES">
+            <value name="TURN_SPEED">
                 <block type="math_number">
                     <field name="NUM">5</field>
                 </block>
@@ -228,7 +240,7 @@ body > #page_container{
 <script type="text/javascript">
     var blocklyArea = document.getElementById('blocklyArea');
     var blocklyDiv = document.getElementById('blocklyDiv');
-    var workspace = Blockly.inject( blocklyDiv,{
+    var workspace = Blockly.inject(blocklyDiv,{
         toolbox: document.getElementById('toolbox'),
         scrollbars: true,
         rtl: false,
@@ -236,7 +248,7 @@ body > #page_container{
             enabled: true,
             controls: true,
             wheel: true,
-            startScale: 1.0,
+            startScale: 0.9,
             maxScale: 2.5,
             minScale: 0.5,
             scaleSpeed: 1.1
@@ -249,7 +261,6 @@ body > #page_container{
         },
         trashcan: true
     });
-
     var onresize = function(e) {
         // Compute the absolute coordinates and dimensions of blocklyArea.
         var element = blocklyArea;
@@ -265,9 +276,11 @@ body > #page_container{
         blocklyDiv.style.top = y + 'px';
         blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
         blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+        Blockly.svgResize(workspace);
     };
     window.addEventListener('resize', onresize, false);
     onresize();
+    Blockly.svgResize(workspace);
 
     function restorelocal(){
         var xml_text = localStorage.getItem("blocks_cache");

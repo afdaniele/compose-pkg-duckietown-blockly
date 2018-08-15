@@ -1,3 +1,12 @@
+function log(type, msg){
+    $('#log_area').append(
+        '[' + type.toUpperCase() + '] : ' + msg + '\n'
+    );
+}//log
+
+function clear_log(){
+    $('#log_area').html('');
+}//clear_log
 
 var ExecutionLogicModule = (function () {
 
@@ -150,7 +159,6 @@ var ExecutionLogicModule = (function () {
   }
 
   return {
-
     launch_websockets: function () {
       var host_name = window.location.hostname;
       var socket_port = 9002;
@@ -217,6 +225,12 @@ var ExecutionLogicModule = (function () {
       var message_data = '';
       switch (current_status) {
         case CODE_STATUS.COMPLETED:
+          clear_log();
+          // check inputs
+          if( !workspace.allInputsFilled() ){
+              log('ERROR', 'One or more blocks are missing in the workspace. Please check and try again.');
+              return;
+          }
           message_data = 'play'+python_version+'\n'; //play2 or play3
           Blockly.Python.addReservedWords('code');
           var saved_statement_prefix = Blockly.Python.STATEMENT_PREFIX;

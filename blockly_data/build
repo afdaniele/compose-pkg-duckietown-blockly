@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+import os
+import glob
+import subprocess
+from shutil import copy2 as copy
+
+# define constants
+BLOCKY_DATA_DIR = os.path.dirname(os.path.realpath(__file__))
+INSTALL_FILE = os.path.join(BLOCKY_DATA_DIR, 'install.dat')
+DEV_BLOCKS_DIR = os.path.join(BLOCKY_DATA_DIR, 'blocks')
+DEV_GENERATORS_DIR = os.path.join(BLOCKY_DATA_DIR, 'generators')
+OUT_DIR = os.path.join(BLOCKY_DATA_DIR, '..', 'data', 'public', 'blockly')
+BUILD_SCRIPT = os.path.join(OUT_DIR, 'build.py')
+
+# files to install
+files_to_install = {
+    'blocks' : [ f for f in subprocess.check_output(['find', DEV_BLOCKS_DIR, '-type', 'f']).split('\n') if len(f.strip()) > 1 ],
+    'generators' : [ f for f in subprocess.check_output(['find', DEV_GENERATORS_DIR, '-type', 'f']).split('\n') if len(f.strip()) > 1 ]
+}
+
+# files to remove
+files_to_remove = [line.rstrip('\n') for line in open(INSTALL_FILE) if len(line.strip()) > 1 and os.path.exists(line)]
+
+print 'Files to remove:\n\t',
+if len(files_to_remove) > 0:
+    print '- ' + '\n\t- '.join( [os.path.relpath(f, os.path.join(OUT_DIR,'..')) for f in files_to_remove] )
+else: print '<none>'
+print
+
+print 'Files to install:\n\t',
+files_to_install_all = files_to_install['blocks'] + files_to_install['generators']
+if len(files_to_install_all) > 0:
+    print '- ' + '\n\t- '.join( [os.path.relpath(f, BLOCKY_DATA_DIR) for f in files_to_install_all] )
+else: print '<none>'
+print
+
+exit()
+# remove files
+for f in files_to_remove:
+    print 'Deleting: %s' % os.path.relpath(f, os.path.join(OUT_DIR,'..'))
+    os.remove(f)
+print
+
+# install new files
+installed_files = []
+for type, file_list in files_to_install.items():
+    for f in file_list:
+        dest_file = os.path.join(OUT_DIR, os.path.relpath(f, BLOCKY_DATA_DIR))
+        dest_dir = os.path.dirname(dest_file)
+        try: os.makedirs( dest_dir, 0755 )
+        except OSError: pass
+        print 'Installing: %s -> %s' % (
+            os.path.relpath(f, BLOCKY_DATA_DIR),
+            os.path.relpath(dest_file, os.path.join(OUT_DIR,'..'))
+        )
+        copy(f, dest_file)
+        installed_files.append( dest_file )
+print
+
+# write `install.dat` file
+with open(INSTALL_FILE, 'w') as f:
+    f.write("\n".join(installed_files))
+
+# build
+print 'Building...'
+subprocess.call(BUILD_SCRIPT, cwd=OUT_DIR, shell=True)
+
+# done
+print 'Done!'
