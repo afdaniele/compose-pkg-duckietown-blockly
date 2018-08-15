@@ -1,6 +1,3 @@
-[submodule "data/public/blockly"]
-	path = data/public/blockly
-	url = https://github.com/google/blockly
 [submodule "data/public/closure-library"]
 	path = data/public/closure-library
 	url = https://github.com/google/closure-library
