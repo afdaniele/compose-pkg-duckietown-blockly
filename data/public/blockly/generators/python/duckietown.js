@@ -35,7 +35,7 @@ Blockly.Python['move'] = function(block) {
   code += "forward_speed = " + forward_speed.toString() + "\n";
   code += "turn_degrees = " + turn_degrees.toString() + "\n";
   code += "duration = " + duration.toString() + "\n\n";
-  code += Blockly.readPythonFile("../blockly/generators/python/scripts/duckietown/drive.py");
+  code += Blockly.readPythonFile("data/duckietown_blockly/blockly/generators/python/scripts/duckietown/drive.py");
   // return Python code
   return code;
 };

@@ -1,4 +1,5 @@
 <?php
+use \system\classes\Core;
 use \system\classes\Configuration;
 ?>
 
@@ -8,18 +9,6 @@ use \system\classes\Configuration;
     }
 </style>
 
-    <!-- Bootstrap Core CSS -->
-    <!-- <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
-    <!-- MetisMenu CSS -->
-    <!-- <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet"> -->
-
-    <!-- Custom CSS -->
-    <!-- <link href="../dist/css/sb-admin-2.css" rel="stylesheet"> -->
-
-    <!-- Custom Fonts -->
-    <!-- <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-
     <!-- Include Blocky -->
     <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blocks_compressed.js"></script>
@@ -28,73 +17,38 @@ use \system\classes\Configuration;
     <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/php_compressed.js"></script>
     <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/msg/js/en.js"></script>
 
-    <!-- Ubuntu fonts -->
-    <!-- <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="assets/css/ubuntu.css">
-    <style>body { font-family: Ubuntu, sans-serif; }</style> -->
-
-
-
-<!-- <body onload="restorelocal()"> -->
+    <div class="btn-group btn-group-justified" role="group" style="margin-bottom:40px">
+        <a role="button" class="btn btn-default" id="launch_button" name="launch_button" onclick="ExecutionLogicModule.launch_code(2);">
+            <i class="fa fa-send" aria-hidden="true"></i>
+            Launch
+        </a>
+        <a role="button" class="btn btn-default" id="end_button" name="end_button" href="#" onclick='ExecutionLogicModule.end_execution();' style="display:none;">
+            <i class="fa fa-stop" aria-hidden="true"></i>
+            Stop execution
+        </a>
+        <a role="button" class="btn btn-default" id="refresh_button" name="refresh_button" href="blockly.html" style="display:none;">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            Refresh
+        </a>
+        <a role="button" class="btn btn-default" id="load_from_file_button" name="load_from_file_button" href="#" onclick='ExecutionLogicModule.load_from_file();'>
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Load from file
+        </a>
+        <a role="button" class="btn btn-default" id="save_to_file_button" name="save_to_file_button" href="#" onclick='ExecutionLogicModule.save_to_file();'>
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Save to file
+        </a>
+        <a role="button" class="btn btn-default" id="clean_ws_button" name="clean_ws_button" href="#" onclick='ExecutionLogicModule.clean_ws();'>
+            <i class="fa fa-eraser" aria-hidden="true"></i>
+            Clean workspace
+        </a>
+    </div>
 
     <div id="wrapper">
-
-        <!-- Navigation -->
-        <!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"> -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-
-                        <li>
-                            <a id="builder" href="#"><i class="fa fa-cubes fa-fw"></i> Builder<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a id="launch_button" name="launch_button" href="#" onclick="ExecutionLogicModule.launch_code($('input[name=group_py]:checked').val());">Launch</a>
-                                </li>
-                                <li>
-                                    <a id="end_button" name="end_button" href="#" onclick='ExecutionLogicModule.end_execution();' style="display:none;">End execution</a>
-                                </li>
-                                <li>
-                                    <a id="refresh_button" name="refresh_button" href="blockly.html" style="display:none;">Refresh</a>
-                                </li>
-                                <li>
-                                    <a id="load_from_file_button" name="load_from_file_button" href="#" onclick='ExecutionLogicModule.load_from_file();'>Load From File</a>
-                                </li>
-                                <li>
-                                    <a id="save_to_file_button" name="save_to_file_button" href="#" onclick='ExecutionLogicModule.save_to_file();'>Save To File</a>
-                                </li>
-                                <li>
-                                    <a id="clean_ws_button" name="clean_ws_button" href="#" onclick='ExecutionLogicModule.clean_ws();'>Clean workspace</a>
-                                </li>
-                                <li>
-                                    <div id="pythondiv" style="color:#75A8D3; text-align:center" >
-                                        <span>Python:</span>
-                                        <input id="python3" type="radio" value="3" name="group_py" />3
-                                        <input id="python2" type="radio" value="2" name="group_py" checked/>2
-                                    </div>
-                                </li>
-
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        <!-- </nav> -->
-
-        <!-- Page Content -->
         <div id="page-wrapper">
-
-            <div id="blocklyArea" style="height:100vh;"></div>
-
+            <div id="blocklyArea" style="height:70vh;"></div>
         </div>
-        <!-- /#page-wrapper -->
     </div>
-    <!-- /#wrapper -->
 
     <div id="blocklyDiv" style="position: absolute"></div>
 
@@ -263,68 +217,51 @@ use \system\classes\Configuration;
         </category>
     </xml>
 
-
-    <!-- jQuery -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-
     <!-- Code execution logic -->
-    <script src="./js/execution_logic.js"></script>
-
-<!-- ACE editor configuration -->
-<script type="text/javascript">
-  document.getElementById('editor').style.fontSize='16px';
-</script>
+    <script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'duckietown_blockly') ?>"></script>
 
 <script>
-  var blocklyArea = document.getElementById('blocklyArea');
-  var blocklyDiv = document.getElementById('blocklyDiv');
-  var workspace = Blockly.inject(blocklyDiv,
-    {toolbox: document.getElementById('toolbox'),
-       scrollbars: true,
-       rtl: false,
-       zoom:
-           {enabled: true,
+    var blocklyArea = document.getElementById('blocklyArea');
+    var blocklyDiv = document.getElementById('blocklyDiv');
+    var workspace = Blockly.inject( blocklyDiv,{
+        toolbox: document.getElementById('toolbox'),
+        scrollbars: true,
+        rtl: false,
+        zoom:{
+            enabled: true,
             controls: true,
             wheel: true,
             maxScale: 4,
             minScale: .25,
             scaleSpeed: 1.1
-           },
-       grid:
-           {spacing: 25,
+        },
+        grid:{
+            spacing: 25,
             length: 3,
             colour: '#ccc',
-            snap: false},
-       trashcan: true});
+            snap: false
+        },
+        trashcan: true
+    });
 
-  var onresize = function(e) {
-  // Compute the absolute coordinates and dimensions of blocklyArea.
-  var element = blocklyArea;
-  var x = 0;
-  var y = 0;
-  do {
-    x += element.offsetLeft;
-    y += element.offsetTop;
-    element = element.offsetParent;
-  } while (element);
-  // Position blocklyDiv over blocklyArea.
-  blocklyDiv.style.left = x + 'px';
-  blocklyDiv.style.top = y + 'px';
-  blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-  blocklyDiv.style.height = blocklyArea.offsetHeight  + 'px';
-  // blocklyDiv.style.height = blocklyArea.offsetHeight - 51 - 42 + 171 + 'px';
-  };
-  window.addEventListener('resize', onresize, false);
-  onresize();
+    var onresize = function(e) {
+        // Compute the absolute coordinates and dimensions of blocklyArea.
+        var element = blocklyArea;
+        var x = 0;
+        var y = 0;
+        do {
+            x += element.offsetLeft;
+            y += element.offsetTop;
+            element = element.offsetParent;
+        } while (element);
+        // Position blocklyDiv over blocklyArea.
+        blocklyDiv.style.left = x + 'px';
+        blocklyDiv.style.top = y + 'px';
+        blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+        blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+    };
+    window.addEventListener('resize', onresize, false);
+    onresize();
 </script>
 
 <script type="text/javascript">
@@ -363,5 +300,9 @@ use \system\classes\Configuration;
     localStorage.setItem("blocks_cache", xml_text);
     var xml_text_stored = localStorage.getItem("blocks_cache");
   }
+
+  $(window).load(function() {
+      restorelocal();
+  });
 
 </script>

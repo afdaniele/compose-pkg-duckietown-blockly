@@ -146,7 +146,7 @@ Blockly.parseOptions_ = function(options) {
   gridOptions.snap = gridOptions.spacing > 0 && !!grid['snap'];
   // var pathToMedia = 'https://blockly-demo.appspot.com/static/media/';
   // var pathToMedia = '10.0.0.1/frontend/pages/assets/';
-  var pathToMedia = 'assets/';
+  var pathToMedia = 'data/duckietown_blockly/blockly/assets/';
   // var pathToMedia = '../pages/assets';
   if (options['media']) {
     pathToMedia = options['media'];
