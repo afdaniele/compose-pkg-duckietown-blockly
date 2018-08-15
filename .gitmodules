@@ -1,0 +1,3 @@
+[submodule "data/public/blockly"]
+	path = data/public/blockly
+	url = https://github.com/afdaniele/blockly
