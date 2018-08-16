@@ -113,7 +113,6 @@ body > #page_container > #page_canvas{
         </value>
       </block>
       <block type="controls_forEach"></block>
-      <block type="for_time"></block>
       <block type="controls_flow_statements"></block>
     </category>
     <category id="catMath" name="Math">
@@ -211,9 +210,6 @@ body > #page_container > #page_canvas{
     </category>
     <category id="catVariables" custom="VARIABLE" name="Variables"></category>
     <category id="catFunctions" custom="PROCEDURE" name="Functions"></category>
-    <category id="code" name="Code">
-          <block type="run_code"></block>
-    </category>
     <category id="control" name="Control">
           <block type="wait"></block>
     </category>
