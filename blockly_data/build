@@ -20,7 +20,9 @@ files_to_install = {
 }
 
 # files to remove
-files_to_remove = [line.rstrip('\n') for line in open(INSTALL_FILE) if len(line.strip()) > 1 and os.path.exists(line)]
+files_to_remove = []
+if os.path.exists(INSTALL_FILE) and os.path.isfile(INSTALL_FILE):
+    files_to_remove = [line.rstrip('\n') for line in open(INSTALL_FILE) if len(line.strip()) > 1]
 
 print 'Files to remove:\n\t',
 if len(files_to_remove) > 0:
@@ -35,11 +37,11 @@ if len(files_to_install_all) > 0:
 else: print '<none>'
 print
 
-exit()
 # remove files
 for f in files_to_remove:
     print 'Deleting: %s' % os.path.relpath(f, os.path.join(OUT_DIR,'..'))
-    os.remove(f)
+    try: os.remove(f)
+    except Error: pass
 print
 
 # install new files

@@ -7,6 +7,10 @@ use \system\classes\Configuration;
 body > #page_container{
     min-width: 96%;
 }
+
+body > #page_container > #page_canvas{
+    margin-bottom: 0;
+}
 </style>
 
 <!-- Include Blocky -->
@@ -14,13 +18,12 @@ body > #page_container{
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blocks_compressed.js"></script>
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/javascript_compressed.js"></script>
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/python_compressed.js"></script>
-<!-- <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/php_compressed.js"></script> -->
 <script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/msg/js/en.js"></script>
 <!-- Code execution logic -->
 <script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'duckietown_blockly') ?>"></script>
 
 
-<div class="btn-group btn-group-justified" role="group" style="margin:auto; margin-bottom:20px; width:970px">
+<div class="btn-group btn-group-justified" role="group" style="margin:20px auto; width:970px">
     <a role="button" class="btn btn-success" id="launch_button" name="launch_button" onclick="ExecutionLogicModule.launch_code(2);">
         <i id="launch_button_icon" class="fa fa-play" aria-hidden="true"></i>
         &nbsp;
@@ -67,7 +70,7 @@ body > #page_container{
     <tr>
         <td style="padding-top:6px">
             <p style="margin:0">Execution Log:</p>
-            <textarea id="log_area" style="width:100%; height:12vh; resize:none" readonly></textarea>
+            <textarea id="log_area" style="width:100%; height:9vh; resize:none" readonly></textarea>
         </td>
     </tr>
 </table>
@@ -287,6 +290,13 @@ body > #page_container{
         try {
             var xml = Blockly.Xml.textToDom(xml_text);
             Blockly.Xml.domToWorkspace(workspace, xml);
+            workspace.getAllBlocks().forEach(function(block){
+                block.setDeletable(true);
+                block.setMovable(true);
+                try {
+                    block.setEditable(true);
+                }catch(e){}
+            });
             automate_localstorage();
         }catch(err){
             console.log(err);
