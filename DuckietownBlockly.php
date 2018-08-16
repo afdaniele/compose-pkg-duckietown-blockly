@@ -46,14 +46,14 @@ class DuckietownBlockly{
 			// link blocks_compressed.js from dist to data/public/blockly/
 			$link_blocks_compressed = __DIR__.'/data/public/blockly/blocks_compressed.js';
 			$dist_blocks_compressed = __DIR__.'/blockly_data/dist/blocks_compressed.js';
-			if( !is_link($link_blocks_compressed) ){
+			if( !file_exists($link_blocks_compressed) || !is_link($link_blocks_compressed) ){
 				unlink($link_blocks_compressed);
 				link($dist_blocks_compressed, $link_blocks_compressed);
 			}
 			// link python_compressed.js from dist to data/public/blockly/
 			$link_python_compressed = __DIR__.'/data/public/blockly/python_compressed.js';
 			$dist_python_compressed = __DIR__.'/blockly_data/dist/python_compressed.js';
-			if( !is_link($link_python_compressed) ){
+			if( !file_exists($link_python_compressed) || !is_link($link_python_compressed) ){
 				unlink($link_python_compressed);
 				link($dist_python_compressed, $link_python_compressed);
 			}
