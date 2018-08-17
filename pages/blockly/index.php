@@ -232,6 +232,7 @@ body > #page_container > #page_canvas{
                 </block>
             </value>
         </block>
+        <block type="stop"></block>
     </category>
 </xml>
 
