@@ -61,11 +61,10 @@ Blockly.Blocks['stop'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("        Stop Duckiebot");
-    this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.Blocks.duckietown.HUE);
- this.setTooltip("Stops the Duckiebot");
+    this.setColour(0);
+ this.setTooltip("Stop the Duckiebot");
  this.setHelpUrl("");
   }
 };
