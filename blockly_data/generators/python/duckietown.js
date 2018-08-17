@@ -48,7 +48,7 @@ function obj_to_code(obj, topic_name){
     var py_obj = "obj = {\n";
     for(var key in obj){
         py_obj += "{0}'{1}' : eval('{2}'),\n".format(
-            Blockly.Python.INDENT, key, obj[key].replace(/\\([\s\S])|(')/g,"\\$1$2")
+            Blockly.Python.INDENT, key, obj[key].toString().replace(/\\([\s\S])|(')/g,"\\$1$2")
         );
     }
     py_obj += "}";
