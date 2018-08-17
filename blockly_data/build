@@ -6,12 +6,14 @@ import subprocess
 from shutil import copy2 as copy
 
 # define constants
+CLOSURE_LIB_URL = "https://github.com/google/closure-library"
 BLOCKY_DATA_DIR = os.path.dirname(os.path.realpath(__file__))
 INSTALL_FILE = os.path.join(BLOCKY_DATA_DIR, 'install.dat')
 DEV_BLOCKS_DIR = os.path.join(BLOCKY_DATA_DIR, 'blocks')
 DEV_GENERATORS_DIR = os.path.join(BLOCKY_DATA_DIR, 'generators')
 DIST_DIR = os.path.join(BLOCKY_DATA_DIR, 'dist')
 OUT_DIR = os.path.join(BLOCKY_DATA_DIR, '..', 'data', 'public', 'blockly')
+CLOSURE_DIR = os.path.join(BLOCKY_DATA_DIR, '..', 'data', 'public', 'closure-library')
 BUILD_SCRIPT = os.path.join(OUT_DIR, 'build.py')
 
 # files to install
@@ -60,6 +62,12 @@ for type, file_list in files_to_install.items():
         copy(f, dest_file)
         installed_files.append( dest_file )
 print
+
+# download closure-library
+if not os.path.exists(CLOSURE_DIR):
+    print 'Library `closure-library` not found. Downloading...'
+    subprocess.call(['git', 'clone', '--depth', '1', CLOSURE_LIB_URL, CLOSURE_DIR])
+    print 'Downloaded!\n'
 
 # write `install.dat` file
 with open(INSTALL_FILE, 'w') as f:

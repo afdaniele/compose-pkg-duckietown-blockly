@@ -19,6 +19,17 @@ Blockly.Python['move'] = function(block) {
     return obj_to_code(obj, '/blockly_drive_json_cmd');
 };
 
+Blockly.Python['stop'] = function(block) {
+    // compile object
+    var obj = {
+      "forward_speed" : 0,
+      "turn_speed" : 0,
+      "duration" : 0
+    };
+    // create JSON object
+    return obj_to_code(obj, '/blockly_drive_json_cmd');
+};
+
 
 
 // Utility functions and objects
@@ -26,7 +37,7 @@ Blockly.Python['move'] = function(block) {
 var python_template = `
 import json
 # create publisher
-pub = rospy.Publisher('{0}', String, queue_size=1, latch=True)
+pub = rospy.Publisher('{0}', String, queue_size=1, latch=False)
 # create JSON string
 {1}
 # send JSON string
