@@ -23,7 +23,7 @@ Blockly.Python['turn_left'] = function(block) {
     // compile object
     var obj = {
       "forward_speed" : 0,
-      "turn_speed" : 10,
+      "turn_speed" : 15,
       "duration" : 1
     };
     // create JSON object
@@ -34,7 +34,7 @@ Blockly.Python['turn_right'] = function(block) {
     // compile object
     var obj = {
       "forward_speed" : 0,
-      "turn_speed" : -10,
+      "turn_speed" : -15,
       "duration" : 1
     };
     // create JSON object
@@ -45,7 +45,7 @@ Blockly.Python['forward'] = function(block) {
     var value_duration = Blockly.Python.valueToCode(block, 'DURATION', Blockly.Python.ORDER_ATOMIC);
     // compile object
     var obj = {
-      "forward_speed" : 40,
+      "forward_speed" : 50,
       "turn_speed" : -5,
       "duration" : value_duration
     };
@@ -57,7 +57,7 @@ Blockly.Python['backward'] = function(block) {
     var value_duration = Blockly.Python.valueToCode(block, 'DURATION', Blockly.Python.ORDER_ATOMIC);
     // compile object
     var obj = {
-      "forward_speed" : -40,
+      "forward_speed" : -50,
       "turn_speed" : 5,
       "duration" : value_duration
     };
