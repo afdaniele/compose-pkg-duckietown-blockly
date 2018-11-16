@@ -52,8 +52,66 @@ Blockly.Blocks['move'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(Blockly.Blocks.duckietown.HUE);
- this.setTooltip("Moves the Duckiebot");
- this.setHelpUrl("");
+    this.setTooltip("Moves the Duckiebot");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['turn_left'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("        Turn Left");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(0);
+    this.setTooltip("Turn the Duckiebot to the left");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['turn_right'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("        Turn Right");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(0);
+    this.setTooltip("Turn the Duckiebot to the right");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("        Move forward");
+    this.appendValueInput("DURATION")
+        .setCheck("Number")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("For (seconds)");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.duckietown.HUE);
+    this.setTooltip("Move the Duckiebot forward");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['backward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("        Move backward");
+    this.appendValueInput("DURATION")
+        .setCheck("Number")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("For (seconds)");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.duckietown.HUE);
+    this.setTooltip("Move the Duckiebot backward");
+    this.setHelpUrl("");
   }
 };
 
@@ -64,7 +122,7 @@ Blockly.Blocks['stop'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(0);
- this.setTooltip("Stop the Duckiebot");
- this.setHelpUrl("");
+    this.setTooltip("Stop the Duckiebot");
+    this.setHelpUrl("");
   }
 };

@@ -232,6 +232,27 @@ body > #page_container > #page_canvas{
                 </block>
             </value>
         </block>
+
+        <block type="turn_left"></block>
+
+        <block type="turn_right"></block>
+
+        <block type="forward">
+            <value name="DURATION">
+                <block type="math_number">
+                    <field name="NUM">2</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="backward">
+            <value name="DURATION">
+                <block type="math_number">
+                    <field name="NUM">2</field>
+                </block>
+            </value>
+        </block>
+
         <block type="stop"></block>
     </category>
 </xml>

@@ -19,6 +19,52 @@ Blockly.Python['move'] = function(block) {
     return obj_to_code(obj, '/blockly_drive_json_cmd');
 };
 
+Blockly.Python['turn_left'] = function(block) {
+    // compile object
+    var obj = {
+      "forward_speed" : 0,
+      "turn_speed" : 10,
+      "duration" : 1
+    };
+    // create JSON object
+    return obj_to_code(obj, '/blockly_drive_json_cmd');
+};
+
+Blockly.Python['turn_right'] = function(block) {
+    // compile object
+    var obj = {
+      "forward_speed" : 0,
+      "turn_speed" : -10,
+      "duration" : 1
+    };
+    // create JSON object
+    return obj_to_code(obj, '/blockly_drive_json_cmd');
+};
+
+Blockly.Python['forward'] = function(block) {
+    var value_duration = Blockly.Python.valueToCode(block, 'DURATION', Blockly.Python.ORDER_ATOMIC);
+    // compile object
+    var obj = {
+      "forward_speed" : 40,
+      "turn_speed" : -5,
+      "duration" : value_duration
+    };
+    // create JSON object
+    return obj_to_code(obj, '/blockly_drive_json_cmd');
+};
+
+Blockly.Python['backward'] = function(block) {
+    var value_duration = Blockly.Python.valueToCode(block, 'DURATION', Blockly.Python.ORDER_ATOMIC);
+    // compile object
+    var obj = {
+      "forward_speed" : -40,
+      "turn_speed" : 5,
+      "duration" : value_duration
+    };
+    // create JSON object
+    return obj_to_code(obj, '/blockly_drive_json_cmd');
+};
+
 Blockly.Python['stop'] = function(block) {
     // compile object
     var obj = {
@@ -36,12 +82,17 @@ Blockly.Python['stop'] = function(block) {
 
 var python_template = `
 import json
+import time
 # create publisher
-pub = rospy.Publisher('{0}', String, queue_size=1, latch=False)
+pub = rospy.Publisher('{0}', String, queue_size=10, latch=True)
 # create JSON string
 {1}
 # send JSON string
 pub.publish(json.dumps(obj))
+# wait for DURATION secs
+time.sleep({2})
+# stop the Bot
+pub.publish(json.dumps({'forward_speed':0,'turn_speed':0,'duration':0}))
 `;
 
 function obj_to_code(obj, topic_name){
@@ -52,5 +103,5 @@ function obj_to_code(obj, topic_name){
         );
     }
     py_obj += "}";
-    return python_template.format( topic_name, py_obj );
+    return python_template.format( topic_name, py_obj, obj["duration"] );
 }
