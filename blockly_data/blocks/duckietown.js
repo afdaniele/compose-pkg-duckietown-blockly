@@ -98,6 +98,23 @@ Blockly.Blocks['forward'] = {
   }
 };
 
+Blockly.Blocks['forward_blocks'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("        Move forward");
+    this.appendValueInput("NO_BLOCKS")
+        .setCheck("Number")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("For (blocks)");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.duckietown.HUE);
+    this.setTooltip("Move the Duckiebot forward");
+    this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['backward'] = {
   init: function() {
     this.appendDummyInput()
