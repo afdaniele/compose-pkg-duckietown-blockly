@@ -8,6 +8,8 @@
     },
     "dependencies" : {
         "system-packages" : [],
-        "packages" : []
+        "packages" : [
+          "duckietown"
+        ]
     }
 }
