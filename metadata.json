@@ -9,7 +9,7 @@
     "dependencies" : {
         "system-packages" : [],
         "packages" : [
-          "duckietown"
+          "duckietown_duckiebot"
         ]
     }
 }
