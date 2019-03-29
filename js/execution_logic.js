@@ -174,7 +174,6 @@ var ExecutionLogicModule = (function () {
       return window.ROSDB.pause(resource_name);
     };
     interpreter.setProperty(scope, 'pause', interpreter.createNativeFunction(wrapper));
-
   }//initApi
 
   function set_status(value) {

@@ -100,17 +100,17 @@ with open(INSTALL_FILE, 'w') as f:
 print('Building...')
 subprocess.call(BUILD_SCRIPT, cwd=OUT_DIR, shell=True)
 
-# copy blocks_compressed.js and python_compressed.js
+# copy blocks_compressed.js and javascript_compressed.js
 blocks_compressed_f = os.path.join(OUT_DIR, 'blocks_compressed.js')
-python_compressed_f = os.path.join(OUT_DIR, 'python_compressed.js')
+javascript_compressed_f = os.path.join(OUT_DIR, 'javascript_compressed.js')
 blocks_compressed_dest = os.path.join(DIST_DIR, 'blocks_compressed.js')
-python_compressed_dest = os.path.join(DIST_DIR, 'python_compressed.js')
+javascript_compressed_dest = os.path.join(DIST_DIR, 'javascript_compressed.js')
 if os.path.exists(blocks_compressed_dest):
   os.remove(blocks_compressed_dest)
-if os.path.exists(python_compressed_dest):
-  os.remove(python_compressed_dest)
+if os.path.exists(javascript_compressed_dest):
+  os.remove(javascript_compressed_dest)
 copy(blocks_compressed_f, blocks_compressed_dest)
-copy(python_compressed_f, python_compressed_dest)
+copy(javascript_compressed_f, javascript_compressed_dest)
 
 # done
 print('Done!')

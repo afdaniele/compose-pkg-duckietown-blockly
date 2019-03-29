@@ -2,6 +2,7 @@
 use \system\classes\Core;
 use \system\classes\Configuration;
 use \system\packages\ros\ROS;
+use \system\packages\duckietown\Duckietown;
 
 $DEBUG = isset($_GET['debug']) && boolval($_GET['debug']);
 
@@ -168,19 +169,19 @@ include __DIR__.'/toolbox.xml';
   window.blockly_requires = [];
   window.blockly_provides = [];
 
-  $(document).on('ROSBRIDGE_CONNECTED', function(evt){
+  $(document).on('<?php echo ROS::$ROSBRIDGE_CONNECTED ?>', function(evt){
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.COMPLETED
     );
   });
 
-  $(document).on('ROSBRIDGE_ERROR', function(evt, error){
+  $(document).on('<?php echo ROS::$ROSBRIDGE_ERROR ?>', function(evt, error){
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.COMPLETED
     );
   });
 
-  $(document).on('ROSBRIDGE_CLOSED', function(evt){
+  $(document).on('<?php echo ROS::$ROSBRIDGE_CLOSED ?>', function(evt){
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.NOT_CONNECTED
     );
