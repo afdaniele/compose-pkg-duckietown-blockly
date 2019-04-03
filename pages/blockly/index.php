@@ -3,10 +3,11 @@ use \system\classes\Core;
 use \system\classes\Configuration;
 use \system\packages\ros\ROS;
 use \system\packages\duckietown\Duckietown;
+use \system\packages\duckietown_duckiebot\Duckiebot;
 
 $DEBUG = isset($_GET['debug']) && boolval($_GET['debug']);
 
-$duckiebot_name = Core::getSetting('duckiebot_name', 'duckietown_duckiebot');
+$duckiebot_name = Duckiebot::getDuckiebotName();
 ?>
 
 <style type="text/css">
@@ -54,17 +55,17 @@ body > #page_container > #page_canvas{
 </style>
 
 <!-- Include Blocky -->
-<script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blockly_compressed.js"></script>
-<script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/blocks_compressed.js"></script>
-<script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/javascript_compressed.js"></script>
-<script type="text/javascript" src="<?php echo Configuration::$BASE_URL ?>/data/duckietown_blockly/blockly/msg/js/en.js"></script>
+<script src="<?php echo Core::getJSscriptURL('blockly_compressed.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('blocks_compressed.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('javascript_compressed.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('blockly_msg_en.js', 'duckietown_blockly') ?>"></script>
 
 <!-- Include ROS -->
 <script src="<?php echo Core::getJSscriptURL('rosdb.js', 'ros') ?>"></script>
 
 <!-- Code execution logic -->
 <script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('blockly_msg.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('custom_msg_en.js', 'duckietown_blockly') ?>"></script>
 <script src="<?php echo Core::getJSscriptURL('acorn_interpreter.js', 'duckietown_blockly') ?>"></script>
 
 

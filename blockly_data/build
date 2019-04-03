@@ -8,14 +8,19 @@ from shutil import copy2 as copy
 # define constants
 CLOSURE_LIB_URL = "https://github.com/google/closure-library"
 BLOCKY_DATA_DIR = os.path.dirname(os.path.realpath(__file__))
+COMPOSE_DIR = os.path.join(BLOCKY_DATA_DIR, '..')
 INSTALL_FILE = os.path.join(BLOCKY_DATA_DIR, 'install.dat')
 DEV_BLOCKS_DIR = os.path.join(BLOCKY_DATA_DIR, 'blocks')
 DEV_GENERATORS_DIR = os.path.join(BLOCKY_DATA_DIR, 'generators')
-DIST_DIR = os.path.join(BLOCKY_DATA_DIR, 'dist')
+DIST_DIR = os.path.join(COMPOSE_DIR, 'js')
 OUT_DIR = os.path.join(BLOCKY_DATA_DIR, '..', 'data', 'public', 'blockly')
 CLOSURE_DIR = os.path.join(BLOCKY_DATA_DIR, '..', 'data', 'public', 'closure-library')
 BUILD_SCRIPT = os.path.join(OUT_DIR, 'build.py generators')
-
+FILES_TO_COPY = [
+  'blockly_compressed.js',
+  'blocks_compressed.js',
+  'javascript_compressed.js'
+]
 
 # files to install
 files_to_install = {
@@ -100,17 +105,18 @@ with open(INSTALL_FILE, 'w') as f:
 print('Building...')
 subprocess.call(BUILD_SCRIPT, cwd=OUT_DIR, shell=True)
 
-# copy blocks_compressed.js and javascript_compressed.js
-blocks_compressed_f = os.path.join(OUT_DIR, 'blocks_compressed.js')
-javascript_compressed_f = os.path.join(OUT_DIR, 'javascript_compressed.js')
-blocks_compressed_dest = os.path.join(DIST_DIR, 'blocks_compressed.js')
-javascript_compressed_dest = os.path.join(DIST_DIR, 'javascript_compressed.js')
-if os.path.exists(blocks_compressed_dest):
-  os.remove(blocks_compressed_dest)
-if os.path.exists(javascript_compressed_dest):
-  os.remove(javascript_compressed_dest)
-copy(blocks_compressed_f, blocks_compressed_dest)
-copy(javascript_compressed_f, javascript_compressed_dest)
+# copy files to JS dir
+print('Installing...')
+for f_name in FILES_TO_COPY:
+  file_in = os.path.join(OUT_DIR, f_name)
+  file_out = os.path.join(DIST_DIR, f_name)
+  if os.path.exists(file_out):
+    os.remove(file_out)
+  print('Copying: %s <- %s' % (
+      os.path.relpath(file_out, COMPOSE_DIR),
+      os.path.relpath(file_in, COMPOSE_DIR)
+  ))
+  copy(file_in, file_out)
 
 # done
 print('Done!')
