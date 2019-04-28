@@ -121,8 +121,6 @@ body > #page_container > #page_canvas{
     </td>
   </tr>
 
-
-
   <tr>
     <td colspan="2">
       <div id="wrapper">
