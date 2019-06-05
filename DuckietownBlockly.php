@@ -7,14 +7,11 @@
 
 namespace system\packages\duckietown_blockly;
 
-require_once $GLOBALS['__SYSTEM__DIR__'].'classes/Core.php';
-use \system\classes\Core as Core;
+use \system\classes\Core;
 
-require_once $GLOBALS['__SYSTEM__DIR__'].'classes/Configuration.php';
-use \system\classes\Configuration as Configuration;
+use \system\classes\Configuration;
 
-require_once $GLOBALS['__SYSTEM__DIR__'].'classes/Utils.php';
-use \system\classes\Utils as Utils;
+use \system\classes\Utils;
 
 
 /**
@@ -41,21 +38,6 @@ class DuckietownBlockly{
      */
 	public static function init(){
 		if( !self::$initialized ){
-			// link blocks_compressed.js from dist to data/public/blockly/
-			$link_blocks_compressed = __DIR__.'/data/public/blockly/blocks_compressed.js';
-			$dist_blocks_compressed = __DIR__.'/blockly_data/dist/blocks_compressed.js';
-			if( !file_exists($link_blocks_compressed) || !is_link($link_blocks_compressed) ){
-				unlink($link_blocks_compressed);
-				link($dist_blocks_compressed, $link_blocks_compressed);
-			}
-			// link python_compressed.js from dist to data/public/blockly/
-			$link_python_compressed = __DIR__.'/data/public/blockly/python_compressed.js';
-			$dist_python_compressed = __DIR__.'/blockly_data/dist/python_compressed.js';
-			if( !file_exists($link_python_compressed) || !is_link($link_python_compressed) ){
-				unlink($link_python_compressed);
-				link($dist_python_compressed, $link_python_compressed);
-			}
-			//
 			return array( 'success' => true, 'data' => null );
 		}else{
 			return array( 'success' => true, 'data' => "Module already initialized!" );

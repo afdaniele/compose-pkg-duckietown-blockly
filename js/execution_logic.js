@@ -158,7 +158,8 @@ var ExecutionLogicModule = (function () {
       function(timeInSeconds, callback) {
         // Delay the call to the callback.
         setTimeout(callback, timeInSeconds * 1000);
-      });
+      }
+    );
     interpreter.setProperty(scope, 'waitForSeconds', wrapper);
 
     // Add APIs function for ROSDB
@@ -174,6 +175,16 @@ var ExecutionLogicModule = (function () {
       return window.ROSDB.pause(resource_name);
     };
     interpreter.setProperty(scope, 'pause', interpreter.createNativeFunction(wrapper));
+
+    // add external APIs
+    if (Blockly.JavaScript.hasOwnProperty('__apis')) {
+      for (var api_name in Blockly.JavaScript['__apis']) {
+        api_fcn = Blockly.JavaScript['__apis'][api_name];
+        // ---
+        Blockly.JavaScript.addReservedWords(api_name);
+        interpreter.setProperty(scope, api_name, interpreter.createNativeFunction(api_fcn));
+      }
+    }
   }//initApi
 
   function set_status(value) {

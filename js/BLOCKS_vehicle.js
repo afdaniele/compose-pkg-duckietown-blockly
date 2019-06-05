@@ -8,7 +8,7 @@ goog.require('Blockly.Blocks');
 Blockly.Blocks['move'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("        Drive Duckiebot");
+        .appendField("        Drive Vehicle");
     this.appendValueInput("FORWARD_SPEED")
         .setCheck("Number")
         .setAlign(Blockly.ALIGN_RIGHT)
@@ -24,8 +24,8 @@ Blockly.Blocks['move'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_DUCKIETOWN_HUE}");
-    this.setTooltip("Moves the Duckiebot");
+    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setTooltip("Moves the Vehicle");
     this.setHelpUrl("");
   }
 };
@@ -37,7 +37,7 @@ Blockly.Blocks['turn_left'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(0);
-    this.setTooltip("Turn the Duckiebot to the left");
+    this.setTooltip("Turn the Vehicle to the left");
     this.setHelpUrl("");
   }
 };
@@ -49,7 +49,7 @@ Blockly.Blocks['turn_right'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(0);
-    this.setTooltip("Turn the Duckiebot to the right");
+    this.setTooltip("Turn the Vehicle to the right");
     this.setHelpUrl("");
   }
 };
@@ -65,8 +65,8 @@ Blockly.Blocks['forward'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_DUCKIETOWN_HUE}");
-    this.setTooltip("Move the Duckiebot forward");
+    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setTooltip("Move the Vehicle forward");
     this.setHelpUrl("");
   }
 };
@@ -82,8 +82,8 @@ Blockly.Blocks['forward_blocks'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_DUCKIETOWN_HUE}");
-    this.setTooltip("Move the Duckiebot forward");
+    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setTooltip("Move the Vehicle forward");
     this.setHelpUrl("");
   }
 };
@@ -99,8 +99,8 @@ Blockly.Blocks['backward'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_DUCKIETOWN_HUE}");
-    this.setTooltip("Move the Duckiebot backward");
+    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setTooltip("Move the Vehicle backward");
     this.setHelpUrl("");
   }
 };
@@ -108,11 +108,24 @@ Blockly.Blocks['backward'] = {
 Blockly.Blocks['stop'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("        Stop Duckiebot");
+        .appendField("        Stop Vehicle");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(0);
-    this.setTooltip("Stop the Duckiebot");
+    this.setTooltip("Stop the Vehicle");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['histogram_perception'] = {
+  init: function() {
+    this.appendValueInput("Bottom Color")
+        .setCheck("Colour")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("This color is visible");
+    this.setOutput(true, "Boolean");
+    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setTooltip("True if the given color is visible in the camera image; False otherwise.");
     this.setHelpUrl("");
   }
 };

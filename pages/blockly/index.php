@@ -2,12 +2,12 @@
 use \system\classes\Core;
 use \system\classes\Configuration;
 use \system\packages\ros\ROS;
-use \system\packages\duckietown\Duckietown;
 use \system\packages\duckietown_duckiebot\Duckiebot;
 
+$this_package = 'blockly';
 $DEBUG = isset($_GET['debug']) && boolval($_GET['debug']);
 
-$duckiebot_name = Duckiebot::getDuckiebotName();
+$vehicle_name = Duckiebot::getDuckiebotName();
 ?>
 
 <style type="text/css">
@@ -55,19 +55,26 @@ body > #page_container > #page_canvas{
 </style>
 
 <!-- Include Blocky -->
-<script src="<?php echo Core::getJSscriptURL('blockly_compressed.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('blocks_compressed.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('javascript_compressed.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('blockly_msg_en.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('blockly_compressed.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('blocks_compressed.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('javascript_compressed.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('blockly_msg_en.js', 'blockly') ?>"></script>
 
 <!-- Include ROS -->
 <script src="<?php echo Core::getJSscriptURL('rosdb.js', 'ros') ?>"></script>
 
 <!-- Code execution logic -->
-<script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('custom_msg_en.js', 'duckietown_blockly') ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('acorn_interpreter.js', 'duckietown_blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('execution_logic.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('custom_msg_en.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('acorn_interpreter.js', 'blockly') ?>"></script>
 
+<!-- Blockly: Blocks -->
+<script src="<?php echo Core::getJSscriptURL('BLOCKS_vehicle.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('BLOCKS_control.js', 'blockly') ?>"></script>
+
+<!-- Blockly: Generators -->
+<script src="<?php echo Core::getJSscriptURL('GENERATORS_vehicle.js', 'blockly') ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('GENERATORS_control.js', 'blockly') ?>"></script>
 
 <table style="width:100%">
   <tr>
@@ -100,6 +107,11 @@ body > #page_container > #page_canvas{
         </a>
       </div>
     </td>
+    <td style="min-width:160px">
+      <?php
+      include_once "components/take_over.php";
+      ?>
+    </td>
     <td style="width:100%">
       <div class="panel panel-default" style="margin:20px 0 20px 40px; min-width:100px; float:right">
         <div class="panel-heading" role="tab" style="height:34px; padding-top: 6px;">
@@ -107,7 +119,7 @@ body > #page_container > #page_canvas{
             <tr>
               <td>
                 <strong>
-                  <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-th" id="ros_bridge_status_icon" aria-hidden="true" style="color:red"></span>
                   &nbsp;
                   ROS:
                   &nbsp;
@@ -122,7 +134,7 @@ body > #page_container > #page_canvas{
   </tr>
 
   <tr>
-    <td colspan="2">
+    <td colspan="3">
       <div id="wrapper">
         <div id="page-wrapper">
           <div id="blocklyArea" style="height:58vh;"></div>
@@ -152,16 +164,22 @@ include __DIR__.'/toolbox.xml';
 
   window.ros_resources = {
     camera : {
-      topic_name : '<?php echo $duckiebot_name ?>/camera_node/image/compressed',
+      topic_name : '<?php echo $vehicle_name ?>/camera_node/image/compressed',
       messageType : 'sensor_msgs/CompressedImage',
       queue_size : 1,
       frequency : 8
     },
     commands : {
-      topic_name : '<?php echo $duckiebot_name ?>/joy',
-      messageType : 'sensor_msgs/Joy',
+      topic_name : '<?php echo $vehicle_name ?>/car_interface/car_cmd',
+      messageType : 'duckietown_msgs/Twist2DStamped',
       queue_size : 1,
-      frequency : 20
+      frequency : 10
+    },
+    supercamera : {
+      topic_name : '<?php echo $vehicle_name ?>/histogram_perception/histogram',
+      messageType : 'std_msgs/String',
+      queue_size : 1,
+      frequency : 10
     }
   };
 
@@ -172,18 +190,21 @@ include __DIR__.'/toolbox.xml';
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.COMPLETED
     );
+    $('#ros_bridge_status_icon').css('color', 'green');
   });
 
   $(document).on('<?php echo ROS::$ROSBRIDGE_ERROR ?>', function(evt, error){
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.COMPLETED
     );
+    $('#ros_bridge_status_icon').css('color', 'orangered');
   });
 
   $(document).on('<?php echo ROS::$ROSBRIDGE_CLOSED ?>', function(evt){
     ExecutionLogicModule.set_current_status(
       ExecutionLogicModule.STATUS.NOT_CONNECTED
     );
+    $('#ros_bridge_status_icon').css('color', 'black');
   });
 
   var data_status_template = `
@@ -216,7 +237,8 @@ include __DIR__.'/toolbox.xml';
         colour: '#ccc',
         snap: false
       },
-      trashcan: true
+      trashcan: true,
+      media: '<?php echo Configuration::$BASE_URL ?>/data/<?php echo $this_package ?>/media/'
     }
   );
 
@@ -405,9 +427,58 @@ include __DIR__.'/toolbox.xml';
   });
 
 
-
+  // $(document).on('<?php echo ROS::$ROSBRIDGE_CONNECTED ?>', function(evt){
+  //   let resource_name = 'supercamera';
+  //   let resource = window.ros_resources[resource_name];
+  //   // subscribe to superpixel camera
+  //   ROSDB.subscribe(
+  //     resource_name,
+  //     resource['topic_name'],
+  //     resource['messageType'],
+  //     resource['frequency'],
+  //     resource['queue_size']
+  //   );
+  //   // define callback function
+  //   function cb_fcn(msg){
+  //     // turn string into array
+  //     let arr = msg.data.split(':');
+  //     if (arr.length != '2')
+  //       return;
+  //     // get image shape and data
+  //     let arr_shape = arr[0].split(',');
+  //     let arr_data = arr[1].split(',');
+  //     // compute number of channels
+  //     let width = arr_shape[0];
+  //     let height = arr_shape[1];
+  //     let num_channels = arr_shape[2];
+  //
+  //     var c = document.getElementById("myCanvas");
+  //     var ctx = c.getContext("2d");
+  //     let k = 20;
+  //
+  //     var r, g, b;
+  //
+  //     for (var i=0; i<height; i++){
+  //       for (var j=0; j<width; j++){
+  //         let p = width * num_channels * i + num_channels * j;
+  //     		r = arr_data[p];
+  //     		g = arr_data[p+1];
+  //     		b = arr_data[p+2];
+  //     		ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)";
+  //     		ctx.fillRect( j*k, i*k, k, k );
+  //     	}
+  //     }
+  //   }
+  //
+  //   setInterval(function(){
+  //     var data = window.ROSDB.get(resource_name);
+  //     if (data != null) {
+  //       cb_fcn(data);
+  //     }
+  //   }, 500);
+  //
+  // });
 </script>
-
 
 
 <?php
@@ -427,3 +498,5 @@ if($DEBUG){
 
 require_once __DIR__.'/../../../core/modules/modals/yes_no_modal.php';
 ?>
+
+<!-- <canvas id="myCanvas" width="200" height="200"></canvas> -->

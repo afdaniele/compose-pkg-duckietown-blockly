@@ -267,7 +267,14 @@
     <block type="lists_sort"></block>
   </category>
   <category name="%{BKY_CATCOLOUR}" colour="%{BKY_COLOUR_HUE}">
-    <block type="colour_picker"></block>
+    <block type="colour_picker">
+      <field name="COLOUR">#bb4040</field>
+    </block>
+
+    <block type="colour_picker">
+      <field name="COLOUR">#40aaaa</field>
+    </block>
+
     <block type="colour_random"></block>
     <block type="colour_rgb">
       <value name="RED">
@@ -319,12 +326,12 @@
     <block type="move">
       <value name="FORWARD_SPEED">
         <block type="math_number">
-          <field name="NUM">10</field>
+          <field name="NUM">40</field>
         </block>
       </value>
       <value name="TURN_SPEED">
         <block type="math_number">
-          <field name="NUM">5</field>
+          <field name="NUM">0</field>
         </block>
       </value>
       <value name="DURATION">
@@ -334,9 +341,7 @@
       </value>
       <data>
         {
-          "requires" : [
-            "camera"
-          ],
+          "requires" : [],
           "provides" : [
             "commands"
           ]
@@ -344,9 +349,9 @@
       </data>
     </block>
 
-    <block type="turn_left"></block>
+    <!-- <block type="turn_left"></block>
 
-    <block type="turn_right"></block>
+    <block type="turn_right"></block> -->
 
     <block type="forward">
       <value name="DURATION">
@@ -354,9 +359,17 @@
           <field name="NUM">2</field>
         </block>
       </value>
+      <data>
+        {
+          "requires" : [],
+          "provides" : [
+            "commands"
+          ]
+        }
+      </data>
     </block>
 
-    <block type="backward">
+    <!-- <block type="backward">
       <value name="DURATION">
         <block type="math_number">
           <field name="NUM">2</field>
@@ -367,9 +380,21 @@
     <block type="stop">
       <data>
         {
-          "requires" : [
-            "camera"
-          ],
+          "requires" : [],
+          "provides" : []
+        }
+      </data>
+    </block> -->
+
+    <block type="histogram_perception">
+      <value name="BOTTOM_COLOR">
+        <block type="field_colour">
+          <field name="Color">(255,0,0)</field>
+        </block>
+      </value>
+      <data>
+        {
+          "requires" : ["supercamera"],
           "provides" : []
         }
       </data>
