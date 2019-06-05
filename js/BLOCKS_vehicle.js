@@ -24,7 +24,7 @@ Blockly.Blocks['move'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("Moves the Vehicle");
     this.setHelpUrl("");
   }
@@ -65,7 +65,7 @@ Blockly.Blocks['forward'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("Move the Vehicle forward");
     this.setHelpUrl("");
   }
@@ -82,7 +82,7 @@ Blockly.Blocks['forward_blocks'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("Move the Vehicle forward");
     this.setHelpUrl("");
   }
@@ -99,7 +99,7 @@ Blockly.Blocks['backward'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("Move the Vehicle backward");
     this.setHelpUrl("");
   }
@@ -124,7 +124,7 @@ Blockly.Blocks['histogram_perception'] = {
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("This color is visible");
     this.setOutput(true, "Boolean");
-    this.setColour("%{BKY_VEHICLE_HUE}");
+    this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("True if the given color is visible in the camera image; False otherwise.");
     this.setHelpUrl("");
   }
