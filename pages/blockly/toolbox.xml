@@ -387,9 +387,14 @@
     </block> -->
 
     <block type="histogram_perception">
-      <value name="BOTTOM_COLOR">
-        <block type="field_colour">
+      <value name="Bottom Color">
+        <block type="colour_picker">
           <field name="Color">(255,0,0)</field>
+        </block>
+      </value>
+      <value name="TOLERANCE">
+        <block type="math_number">
+          <field name="NUM">50</field>
         </block>
       </value>
       <data>

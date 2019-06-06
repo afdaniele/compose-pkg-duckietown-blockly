@@ -123,6 +123,10 @@ Blockly.Blocks['histogram_perception'] = {
         .setCheck("Colour")
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("This color is visible");
+    this.appendValueInput("TOLERANCE")
+        .setCheck("Number")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("Tolerance 0-255");
     this.setOutput(true, "Boolean");
     this.setColour("%{BKY_DUCKIETOWN_HUE}");
     this.setTooltip("True if the given color is visible in the camera image; False otherwise.");

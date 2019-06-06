@@ -8,7 +8,7 @@ if (! Blockly.JavaScript.hasOwnProperty('__apis')) {
   Blockly.JavaScript['__apis'] = {};
 }
 
-function is_color_detected(color_r, color_g, color_b, start_row, end_row){
+function is_color_detected(color_r, color_g, color_b, start_row, end_row, threshold){
   // get latest message
   let resource_name = 'supercamera';
   var msg = window.ROSDB.get(resource_name);
@@ -47,8 +47,8 @@ function is_color_detected(color_r, color_g, color_b, start_row, end_row){
     }
   }
   // ---
-  console.log('Error: ' + min_error);
-  return min_error < 30;
+  console.log('Error: ' + min_error + ' <? ' + threshold);
+  return min_error < threshold;
 }
 
 Blockly.JavaScript['__apis']['is_color_detected'] = is_color_detected;
@@ -95,7 +95,8 @@ Blockly.JavaScript['forward'] = function(block) {
 
 Blockly.JavaScript['histogram_perception'] = function(block) {
   let color = Blockly.JavaScript.valueToCode(block, 'Bottom Color', Blockly.JavaScript.ORDER_ATOMIC);
-  let code = 'is_color_detected({0}, {1}, {2}, {3}, {4})';
+  let tolerance = Blockly.JavaScript.valueToCode(block, 'TOLERANCE', Blockly.JavaScript.ORDER_ATOMIC);
+  let code = 'is_color_detected({0}, {1}, {2}, {3}, {4}, {5})';
 
   function hexToRgb(hex) {
     var result = /^'#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})'$/i.exec(hex);
@@ -107,7 +108,7 @@ Blockly.JavaScript['histogram_perception'] = function(block) {
   }
 
   color = hexToRgb(color);
-  code = code.format(color.r, color.g, color.b, 1, 4);
+  code = code.format(color.r, color.g, color.b, 1, 4, tolerance);
 
   return [code, Blockly.JavaScript.ORDER_NONE];
 }
