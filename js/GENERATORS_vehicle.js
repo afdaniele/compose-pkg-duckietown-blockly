@@ -13,8 +13,8 @@ function is_color_detected(color_r, color_g, color_b, start_row, end_row, thresh
   let resource_name = 'supercamera';
   var msg = window.ROSDB.get(resource_name);
   if (msg == null) {
-    alert('No data received for resource "{0}"'.format(resource_name));
-    return;
+    console.log('No data received for resource "{0}"'.format(resource_name));
+    return false;
   }
 
   // turn string into array
