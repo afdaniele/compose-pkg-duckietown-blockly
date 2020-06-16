@@ -117,7 +117,7 @@ $vehicle_name = Duckiebot::getDuckiebotName();
         </td>
         <td style="min-width:160px">
             <?php
-            include_once "components/take_over.php";
+//            include_once "components/take_over.php";
             ?>
         </td>
         <td style="width:100%">
@@ -175,19 +175,19 @@ include __DIR__ . '/toolbox.xml';
 
     window.ros_resources = {
         camera: {
-            topic_name: '<?php echo $vehicle_name ?>/camera_node/image/compressed',
+            topic_name: '/<?php echo $vehicle_name ?>/camera_node/image/compressed',
             messageType: 'sensor_msgs/CompressedImage',
             queue_size: 1,
             frequency: 8
         },
         commands: {
-            topic_name: '<?php echo $vehicle_name ?>/car_interface/car_cmd',
+            topic_name: '/<?php echo $vehicle_name ?>/joy_mapper_node/car_cmd',
             messageType: 'duckietown_msgs/Twist2DStamped',
             queue_size: 1,
             frequency: 10
         },
         supercamera: {
-            topic_name: '<?php echo $vehicle_name ?>/histogram_perception/histogram',
+            topic_name: '/<?php echo $vehicle_name ?>/histogram_perception/histogram',
             messageType: 'std_msgs/String',
             queue_size: 1,
             frequency: 10
@@ -197,21 +197,21 @@ include __DIR__ . '/toolbox.xml';
     window.blockly_requires = [];
     window.blockly_provides = [];
 
-    $(document).on('<?php echo ROS::$ROSBRIDGE_CONNECTED ?>', function (evt) {
+    $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function (evt) {
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.COMPLETED
         );
         $('#ros_bridge_status_icon').css('color', 'green');
     });
 
-    $(document).on('<?php echo ROS::$ROSBRIDGE_ERROR ?>', function (evt, error) {
+    $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_ERROR) ?>', function (evt, error) {
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.COMPLETED
         );
         $('#ros_bridge_status_icon').css('color', 'orangered');
     });
 
-    $(document).on('<?php echo ROS::$ROSBRIDGE_CLOSED ?>', function (evt) {
+    $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CLOSED) ?>', function (evt) {
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.NOT_CONNECTED
         );
