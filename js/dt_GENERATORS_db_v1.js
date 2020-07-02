@@ -135,7 +135,14 @@ Blockly.JavaScript["histogram_perception"] = function (block) {
   }
 
   color = hexToRgb(color);
+  //TODO: color.r is broken!
   code = code.format(color.r, color.g, color.b, 1, 4, tolerance);
 
   return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript["wait"] = function (block) {
+  var seconds = Number(block.getFieldValue("WAIT_SECS"));
+  var code = "waitForSeconds(" + seconds + ");\n";
+  return code;
 };

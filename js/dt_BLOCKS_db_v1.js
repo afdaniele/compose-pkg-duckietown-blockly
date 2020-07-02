@@ -1,6 +1,7 @@
 "use strict";
 
 
+
 Blockly.Blocks["move"] = {
   init: function () {
     this.appendDummyInput().appendField("        Drive Vehicle");
@@ -121,6 +122,20 @@ Blockly.Blocks["histogram_perception"] = {
     this.setTooltip(
       "True if the given color is visible in the camera image; False otherwise."
     );
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks["wait"] = {
+  init: function () {
+    this.appendDummyInput()
+      .appendField("Wait ")
+      .appendField(new Blockly.FieldTextInput("1"), "WAIT_SECS")
+      .appendField("seconds");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour("%{BKY_CONTROL_HUE}");
+    this.setTooltip("");
     this.setHelpUrl("");
   },
 };

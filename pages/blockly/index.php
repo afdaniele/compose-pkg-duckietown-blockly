@@ -40,12 +40,10 @@
 
 <!-- Blockly: Blocks -->
 <script src="<?php echo Core::getJSscriptURL('dt_custom_msg_en.js', $this_package) ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('dt_BLOCKS_vehicle.js', $this_package) ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('dt_BLOCKS_control.js', $this_package) ?>"></script>
+<!--DBv1 Blocks-->
+<script src="<?php echo Core::getJSscriptURL('dt_BLOCKS_db_v1.js', $this_package) ?>"></script>
+<script src="<?php echo Core::getJSscriptURL('dt_GENERATORS_db_v1.js', $this_package) ?>"></script>
 
-<!-- Blockly: Generators -->
-<script src="<?php echo Core::getJSscriptURL('dt_GENERATORS_vehicle.js', $this_package) ?>"></script>
-<script src="<?php echo Core::getJSscriptURL('dt_GENERATORS_control.js', $this_package) ?>"></script>
 
 <!--=========================================End File Import=======================================-->
 
