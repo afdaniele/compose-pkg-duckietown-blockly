@@ -60,17 +60,17 @@
       if(!on){
         on = true;
         window.estopSet = true; //switch on estop on
-        window.ROSDB.publish('estop',{data:true})
-        window.ROSDB.publish('estop',{data:true})
-        window.ROSDB.publish('estop',{data:true})
+        window.ROSDB.publish('to_estop',{data:true})
+        window.ROSDB.publish('to_estop',{data:true})
+        window.ROSDB.publish('to_estop',{data:true})
         $('body').css('background-image', 'linear-gradient(to top, #F7F7F6, #ff0000, #F7F7F6)');
         $('#vehicle_driving_mode_status').html('ESTOPPED!');
         return;
       }
       window.estopSet = false; //switch off estop off
-      window.ROSDB.publish('estop',{data:false})
-      window.ROSDB.publish('estop',{data:false})
-      window.ROSDB.publish('estop',{data:false})
+      window.ROSDB.publish('to_estop',{data:false})
+      window.ROSDB.publish('to_estop',{data:false})
+      window.ROSDB.publish('to_estop',{data:false})
       on = false;
       if (window.mission_control_Mode =='manual'){
         $('body').css('background-image', 'linear-gradient(to top, #F7F7F6, #FFC800, #F7F7F6)');
@@ -134,7 +134,7 @@
       v: v_val * v_gain,
       omega: omega_val * omega_gain
     });
-    window.ROSDB.publish('commands',car_cmd)
+    window.ROSDB.publish('to_commands',car_cmd)
   } //publish_command
 
   // publish command at regular rate
@@ -170,9 +170,9 @@
         window.mission_control_Mode = 'manual';
       }
     }else {
-      window.ROSDB.publish('estop',{data:true});
-      window.ROSDB.publish('estop',{data:true});
-      window.ROSDB.publish('estop',{data:true});
+      window.ROSDB.publish('to_estop',{data:true});
+      window.ROSDB.publish('to_estop',{data:true});
+      window.ROSDB.publish('to_estop',{data:true});
       window.mission_control_Mode = 'ESTOPPED!';
       window.estopSet=true;
       if (window.estopSet!=true){
