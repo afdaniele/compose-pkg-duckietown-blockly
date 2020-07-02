@@ -1,0 +1,41 @@
+body>#page_container {
+    min-width: 96%;
+}
+
+body>#page_container>#page_canvas {
+    margin-bottom: 0;
+}
+
+.btn-static {
+    /* background-color: white; */
+    border: 1px solid lightgrey;
+    cursor: default;
+}
+
+.btn-static:active {
+    -moz-box-shadow: inset 0 0 0px white;
+    -webkit-box-shadow: inset 0 0 0px white;
+    box-shadow: inset 0 0 0px white;
+}
+
+.panel>.panel-heading a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.ros-topic-status {
+    display: inline-block;
+    margin: 0 4px;
+    font-size: 15px;
+    padding-right: 10px;
+    border-right: 1px solid lightgrey;
+}
+
+.ros-topic-status .fa {
+    font-size: 18px;
+}
+
+#ros_topic_status_container .ros-topic-status:last-child {
+    padding-right: 0;
+    border-right: none;
+}
