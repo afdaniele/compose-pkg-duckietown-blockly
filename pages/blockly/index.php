@@ -334,11 +334,6 @@
                 include_once "components/take_over.php";
             ?>
         </td>
-        <td class="text-center" style="width:40%; padding-top:10px">
-            <i class="fa fa-toggle-on" aria-hidden="true"></i> Mode:
-            <strong id="vehicle_driving_mode_status">ESTOPPED!</strong>
-        </td>
-
     </tr>
     <tr>
         <td colspan="3">
@@ -351,7 +346,7 @@
         </td>
     </tr>
     <tr>
-        <td style="width:100%">
+        <td style="width:100%;padding-top:20px">
                 <div class="panel panel-default" style="float:left">
                     <div class="panel-heading" role="tab" style="height:34px; padding-top: 6px; resize: auto">
                         <table>
@@ -370,14 +365,19 @@
                     </div>
                 </div>
         </td>
+        <td class="text-center" style="width:40%;">
+            Mode:
+            <strong id="vehicle_driving_mode_status">ESTOPPED!</strong>
+        </td>
     </tr>
+</table>
+<table style="width:100%">
     <tr>
-      <td style="padding-top:6px">
+      <td >
       <p style="margin:0">Execution Log:</p>
       <textarea id="log_area" style="width:100%; height:9vh; resize:auto" readonly></textarea>
       </td>
     </tr>
-
 </table>
 <script type="text/javascript"> //! Blockly Inject
     var blocklyArea = document.getElementById('blocklyArea');
