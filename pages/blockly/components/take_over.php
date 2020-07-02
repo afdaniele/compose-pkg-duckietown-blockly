@@ -17,69 +17,65 @@
 
   // apply sensitivity
   $omega_gain *= $sensitivity;
-  ROS::connect();
-  console_log("[DEBUG] Obatined Duckiebot is: " . $vehicle_name);
-  console_log("[INFO] Is ROS Initialized? " . (ROS::isInitialized() ? 'Yes' : 'NO!'))
 ?>
 
-
 <script type="text/javascript">
-  //! Setup ROS resource for non blockly page. Comment this section out for blockly
-  function to_update_ros_status(event) {
-        window.to_ros_resources = {
-          to_estop: {
-            topic_name: '/<?php echo $vehicle_name ?>/wheels_driver_node/emergency_stop',
-            messageType: 'duckietown_msgs/BoolStamped',
-            queue_size: 1,
-            frequency: 10
-          },
-          to_commands: {
-            topic_name: '/<?php echo $vehicle_name ?>/joy_mapper_node/car_cmd',
-            messageType: 'duckietown_msgs/Twist2DStamped',
-            queue_size: 1,
-            frequency: 10
-          }
-        };
-        to_advertise = ["to_estop","to_commands"];
-        for (var i in to_advertise) {
-            window.ROSDB.advertise(
-                to_advertise[i],
-                window.to_ros_resources[to_advertise[i]]['topic_name'],
-                window.to_ros_resources[to_advertise[i]]['messageType'],
-                window.to_ros_resources[to_advertise[i]]['frequency'],
-                window.to_ros_resources[to_advertise[i]]['queue_size']
-            );
-        }
-        window.to_blockly_provides = provides;
-    } //update_ros_status
+  // //! Setup ROS resource for non blockly page. Comment this section out for blockly
+  // function to_update_ros_status(event) {
+  //   window.to_ros_resources = {
+  //         to_estop: {
+  //           topic_name: '/<?php echo $vehicle_name ?>/wheels_driver_node/emergency_stop',
+  //           messageType: 'duckietown_msgs/BoolStamped',
+  //           queue_size: 1,
+  //           frequency: 10
+  //         },
+  //         to_commands: {
+  //           topic_name: '/<?php echo $vehicle_name ?>/joy_mapper_node/car_cmd',
+  //           messageType: 'duckietown_msgs/Twist2DStamped',
+  //           queue_size: 1,
+  //           frequency: 10
+  //         }
+  //       };
+  //       to_advertise = ["to_estop","to_commands"];
+  //       for (var i in to_advertise) {
+  //           window.ROSDB.advertise(
+  //               to_advertise[i],
+  //               window.to_ros_resources[to_advertise[i]]['topic_name'],
+  //               window.to_ros_resources[to_advertise[i]]['messageType'],
+  //               window.to_ros_resources[to_advertise[i]]['frequency'],
+  //               window.to_ros_resources[to_advertise[i]]['queue_size']
+  //           );
+  //       }
+  //       window.to_blockly_provides = provides;
+  //   } //update_ros_status
 
-  function to_update_data_status() {
-      resources_list = [
-          window.to_blockly_provides
-      ];
-      hz_0_colors = [
-          'red',
-          'black'
-      ];
-      for (var j in resources_list) {
-          var resources = resources_list[j];
-          var color = hz_0_colors[j];
-          for (var i in resources) {
-              var resource_name = resources[i];
-              var expected_hz = window.ros_resources[resource_name]['frequency'];
-              var elem = $('#{0}-data-source-status'.format(resource_name));
-              var hz = window.ROSDB.hz(resource_name);
-              if (hz >= 0.6 * expected_hz)
-                  color = 'green';
-              if (hz > 0.4 * expected_hz && hz < 0.6 * expected_hz)
-                  color = 'orange';
-              elem.css('color', color);
-              elem.prop('title', '{0} Hz'.format(hz.toFixed(2)));
-          }
-      }
-  } //update_data_status
-  to_update_ros_status()
-  setInterval(to_update_data_status, 100);
+  // function to_update_data_status() {
+  //     resources_list = [
+  //         window.to_blockly_provides
+  //     ];
+  //     hz_0_colors = [
+  //         'red',
+  //         'black'
+  //     ];
+  //     for (var j in resources_list) {
+  //         var resources = resources_list[j];
+  //         var color = hz_0_colors[j];
+  //         for (var i in resources) {
+  //             var resource_name = resources[i];
+  //             var expected_hz = window.ros_resources[resource_name]['frequency'];
+  //             var elem = $('#{0}-data-source-status'.format(resource_name));
+  //             var hz = window.ROSDB.hz(resource_name);
+  //             if (hz >= 0.6 * expected_hz)
+  //                 color = 'green';
+  //             if (hz > 0.4 * expected_hz && hz < 0.6 * expected_hz)
+  //                 color = 'orange';
+  //             elem.css('color', color);
+  //             elem.prop('title', '{0} Hz'.format(hz.toFixed(2)));
+  //         }
+  //     }
+  // } //update_data_status
+  // to_update_ros_status()
+  // setInterval(to_update_data_status, 100);
 
   // estop toggle switch control
   window.estopSet = true;
