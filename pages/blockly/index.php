@@ -21,6 +21,7 @@
     include __DIR__ . '/toolbox.xml';
 
     $DEBUG = isset($_GET['debug']) && boolval($_GET['debug']);
+    $DEBUG = true;
 ?>
 
 <!-- Include Blocky -->
@@ -371,14 +372,6 @@
         </td>
     </tr>
 </table>
-<table style="width:100%">
-    <tr>
-      <td >
-      <p style="margin:0">Execution Log:</p>
-      <textarea id="log_area" style="width:100%; height:9vh; resize:auto" readonly></textarea>
-      </td>
-    </tr>
-</table>
 <script type="text/javascript"> //! Blockly Inject
     var blocklyArea = document.getElementById('blocklyArea');
     var blocklyDiv = document.getElementById('blocklyDiv');
@@ -442,20 +435,23 @@
 
 <!--===================================Debugger========================================================-->
 <?php
-if ($DEBUG) {
-    ?>
-        <br />
-        <textarea id="debug_code_textarea" style="width:100%; height:24vh; resize:none" readonly></textarea>
-        <script type="text/javascript">
-            function show_code(event) {
-                let code = Blockly.JavaScript.workspaceToCode(window.blockly_ws);
-                document.getElementById('debug_code_textarea').value = code;
-            }
+    if ($DEBUG) {
+        ?>
+            <br />
+            <p style="margin:0">DEBUG:</p>
+            <textarea id="debug_code_textarea" style="width:100%; height:24vh; resize:none" readonly></textarea>
+            <script type="text/javascript">
+                function show_code(event) {
+                    let code = Blockly.JavaScript.workspaceToCode(window.blockly_ws);
+                    document.getElementById('debug_code_textarea').value = code;
+                }
 
-            window.blockly_ws.addChangeListener(show_code);
-        </script>
-    <?php
-}
-require_once $GLOBALS['__EMBEDDED__PACKAGES__DIR__'] . '/core/modules/modals/yes_no_modal.php';
+                window.blockly_ws.addChangeListener(show_code);
+            </script>
+            <p style="margin:0">Execution Log:</p>
+            <textarea id="log_area" style="width:100%; height:9vh; resize:auto" readonly></textarea>
+        <?php
+    }
+    require_once $GLOBALS['__EMBEDDED__PACKAGES__DIR__'] . '/core/modules/modals/yes_no_modal.php';
 ?>
 <!--===================================END Debugger====================================================-->
