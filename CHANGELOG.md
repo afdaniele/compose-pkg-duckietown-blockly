@@ -1,3 +1,6 @@
+## 0.2.3 (July 04, 2020)
+  - fixed bug
+
 ## 0.2.2 (June 16, 2020)
   - adapted to multi-robot ROS
   - reformat
