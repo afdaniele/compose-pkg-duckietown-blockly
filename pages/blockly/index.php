@@ -127,7 +127,7 @@
 
     function update_ros_status(event) {
         requires = [];
-        provides = ["estop","commands"];
+        provides = [];
         window.blockly_ws.getAllBlocks().forEach(function(block) {
             if (block.hasOwnProperty('data')) {
                 data = JSON.parse(block.data);

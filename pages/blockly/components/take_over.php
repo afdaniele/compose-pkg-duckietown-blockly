@@ -1,6 +1,6 @@
 <?php
-  use \system\packages\duckietown_duckiebot\Duckiebot;
-  use \system\packages\ros\ROS;
+use \system\packages\duckietown_duckiebot\Duckiebot;
+use \system\packages\ros\ROS;
 ?>
 
 <span style="float: right; font-size: 12pt">Take over&nbsp;
@@ -8,19 +8,23 @@
 </span>
 
 <?php
-  // TODO: get these from ROS param
-  $v_gain = 0.5;
-  $omega_gain = 8.3;
-  $sensitivity = 0.5;
-  $output_commands_hz = 10.0;
-  $vehicle_name = Duckiebot::getDuckiebotName();
+// TODO: get these from ROS param
+$v_gain = 0.5;
+$omega_gain = 8.3;
+$sensitivity = 0.5;
+$output_commands_hz = 10.0;
+$vehicle_name = Duckiebot::getDuckiebotName();
 
-  // apply sensitivity
-  $omega_gain *= $sensitivity;
-  ROS::connect();
+// apply sensitivity
+$omega_gain *= $sensitivity;
+ROS::connect();
 ?>
 
 <script type="text/javascript">
+  function to_update_ros_parameters() {
+
+  }
+
   function to_update_ros_status(event) {
     window.to_ros_resources = {
           to_estop: {
@@ -47,11 +51,7 @@
             );
         }
         window.to_blockly_provides = to_advertise;
-    } //update_ros_status
-  $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function(evt) {
-        console.log("[INFO] Report ROS Bridge Connected!");
-        to_update_ros_status();
-    });
+  } //update_ros_status
   // estop toggle switch control
   window.estopSet = true;
   var toggleEstop = function(){
@@ -60,6 +60,7 @@
       if(!on){
         on = true;
         window.estopSet = true; //switch on estop on
+        console.log("[INFO]: Estop ON!")
         window.ROSDB.publish('to_estop',{data:true})
         window.ROSDB.publish('to_estop',{data:true})
         window.ROSDB.publish('to_estop',{data:true})
@@ -68,6 +69,7 @@
         return;
       }
       window.estopSet = false; //switch off estop off
+      console.log("[INFO]: Estop Off!")
       window.ROSDB.publish('to_estop',{data:false})
       window.ROSDB.publish('to_estop',{data:false})
       window.ROSDB.publish('to_estop',{data:false})
@@ -81,8 +83,13 @@
       }
     }
   }();
-  toggleEstop(); //Defult estop off
 
+  $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function(evt) {
+    console.log("[INFO] Take over initial ROS config complete!")
+    to_update_ros_status();
+    to_update_ros_parameters();
+    toggleEstop(); //Defult estop off
+  });
 
   // define the list of keys that can be used to drive the vehicle
   window.mission_control_Keys = {
