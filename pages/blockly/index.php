@@ -249,7 +249,7 @@ include __DIR__ . '/toolbox.xml';
                 snap: false
             },
             trashcan: true,
-            media: '<?php echo Configuration::$BASE ?>/data/<?php echo $this_package ?>/media/'
+            media: '<?php echo Configuration::$BASE ?>data/<?php echo $this_package ?>/media/'
         }
     );
 
