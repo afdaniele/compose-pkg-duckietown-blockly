@@ -11,21 +11,21 @@ use \system\packages\ros\ROS;
 // TODO: get these from ROS param
 $v_gain = 0.5;
 $omega_gain = 8.3;
-$sensitivity = 0.5;
+
 $output_commands_hz = 10.0;
 $vehicle_name = Duckiebot::getDuckiebotName();
 
-// apply sensitivity
-$omega_gain *= $sensitivity;
 ROS::connect();
 ?>
 
 <script type="text/javascript">
-  function to_update_ros_parameters() {
-
+  async function to_update_ros_parameters() {
+    var gainParam = await window.ROSDB.paramGet('/<?php echo $vehicle_name ?>/kinematics_node/gain');
+    gain = await gainParam==null ? 1.0 : gainParam;
+    console.info("[INFO]: Set velocity gain to ", gain);
   }
 
-  function to_update_ros_status(event) {
+  function to_update_ros_status() {
     window.to_ros_resources = {
           to_estop: {
             topic_name: '/<?php echo $vehicle_name ?>/wheels_driver_node/emergency_stop',
@@ -60,7 +60,7 @@ ROS::connect();
       if(!on){
         on = true;
         window.estopSet = true; //switch on estop on
-        console.log("[INFO]: Estop ON!")
+        console.info("[INFO]: Estop ON!")
         window.ROSDB.publish('to_estop',{data:true})
         window.ROSDB.publish('to_estop',{data:true})
         window.ROSDB.publish('to_estop',{data:true})
@@ -69,7 +69,7 @@ ROS::connect();
         return;
       }
       window.estopSet = false; //switch off estop off
-      console.log("[INFO]: Estop Off!")
+      console.info("[INFO]: Estop Off!")
       window.ROSDB.publish('to_estop',{data:false})
       window.ROSDB.publish('to_estop',{data:false})
       window.ROSDB.publish('to_estop',{data:false})
@@ -83,14 +83,14 @@ ROS::connect();
       }
     }
   }();
-
+  showPleaseWait()
   $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function(evt) {
-    console.log("[INFO] Take over initial ROS config complete!")
+    console.info("[INFO] Take over initial ROS config complete!")
     to_update_ros_status();
     to_update_ros_parameters();
     toggleEstop(); //Defult estop off
   });
-
+  hidePleaseWait()
   // define the list of keys that can be used to drive the vehicle
   window.mission_control_Keys = {
     UP_ARROW: 38,
@@ -113,7 +113,7 @@ ROS::connect();
     if (window.mission_control_Mode != 'manual')
       return;
     if (window.estopSet == true){
-      console.log("[WARNING] Attempted manual drive when estoped!")
+      console.warn("[WARNING] Attempted manual drive when estoped!")
       return;
     }
     // space and arrow keys
@@ -157,6 +157,7 @@ ROS::connect();
       }
     }, false);
     // start publishing commands to the vehicle
+
     setInterval(publish_command, <?php echo intval(1000.0 / $output_commands_hz) ?>);
   });
 

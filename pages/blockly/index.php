@@ -52,17 +52,17 @@
 <?php //! Robot Initialization
     $vehicle_name = Duckiebot::getDuckiebotName();
     if (ip2long($vehicle_name) == true or $vehicle_name == "localhost") {
-        console_log("[FATAL] Your Duckiebot Name seems to be an ip!");
+        echo '<script>console.error("[FATAL] Your Duckiebot Name seems to be an ip!")</script>';
         throw new Exception("Vehicle IP obtained wrongly!");
     }
     ROS::connect();
-    console_log("[DEBUG] Obatined Duckiebot is: " . $vehicle_name);
-    console_log("[INFO] Is ROS Initialized? " . (ROS::isInitialized() ? 'Yes' : 'NO!'))
+    console_log("[INFO]: Obatined Duckiebot is: " . $vehicle_name);
+    console_log("[INFO]: Is ROS Initialized? " . (ROS::isInitialized() ? 'Yes' : 'NO!'))
 ?>
 
 <script type="text/javascript"> //! Set the ROS Bridge Status Indicator!
     $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function(evt) {
-        console.log("[INFO] Report ROS Bridge Connected!")
+        console.info("[INFO] Report ROS Bridge Connected!")
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.COMPLETED
         );
@@ -70,7 +70,7 @@
     });
 
     $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_ERROR) ?>', function(evt, error) {
-        console.log("[ERROR] Report ROS Bridge ERROR!")
+        console.error("[ERROR] Report ROS Bridge ERROR!")
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.COMPLETED
         );
@@ -78,7 +78,7 @@
     });
 
     $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CLOSED) ?>', function(evt) {
-        console.log("[ERROR] Report ROS Bridge Closed!")
+        console.error("[ERROR] Report ROS Bridge Closed!")
         ExecutionLogicModule.set_current_status(
             ExecutionLogicModule.STATUS.NOT_CONNECTED
         );
