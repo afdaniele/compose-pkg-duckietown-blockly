@@ -1,6 +1,5 @@
 "use strict";
 
-
 if (!Blockly.JavaScript.hasOwnProperty("__apis")) {
   Blockly.JavaScript["__apis"] = {};
 }

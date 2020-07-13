@@ -31,10 +31,12 @@
 <script src="<?php echo Core::getJSscriptURL('blockly_messages.js', $this_package) ?>"></script>
 <script src="<?php echo Core::getJSscriptURL('acorn_interpreter.js', $this_package) ?>"></script>
 
-
 <!-- Include ROS -->
 <script src="<?php echo Core::getJSscriptURL('rosdb.js', 'ros') ?>"></script>
 <script src="<?php echo Core::getJSscriptURL('roslib.min.js', 'ros') ?>"></script>
+<!-- Include CV --> <!-- AS of July 2020, using CV 4.3.0-->
+<script async src="<?php echo Core::getJSscriptURL('opencv.js', $this_package) ?>" onload= "onOpenCVReady();" type="text/javascript"></script>
+
 <!-- Code execution logic -->
 <script src="<?php echo Core::getJSscriptURL('dt_execution_logic.js', $this_package) ?>"></script>
 
@@ -59,7 +61,12 @@
     console_log("[INFO]: Obatined Duckiebot is: " . $vehicle_name);
     console_log("[INFO]: Is ROS Initialized? " . (ROS::isInitialized() ? 'Yes' : 'NO!'))
 ?>
-
+<script type="text/javascript">
+    function onOpenCVReady(){
+        console.log("[INFO]: OpenCV Ready!");
+        $('#cv_status').html('Ready!');
+    };
+</script>
 <script type="text/javascript"> //! Set the ROS Bridge Status Indicator!
     $(document).on('<?php echo ROS::get_event(ROS::$ROSBRIDGE_CONNECTED) ?>', function(evt) {
         console.info("[INFO] Report ROS Bridge Connected!")
@@ -297,7 +304,7 @@
 <style>
     <?php include 'CSS/main.css'; ?>
 </style>
-<table style="width:100%"> <!--Header Buttons-->
+<table style="width:100%">
     <tr>
         <td style="width:500px; min-width:500px; max-width:500px">
             <div class="btn-group btn-group-justified" role="group" style="margin:20px 0">
@@ -333,7 +340,7 @@
                 include_once "components/take_over.php";
             ?>
         </td>
-    </tr>
+    </tr> <!-- Top Buttons and Take Over -->
     <tr>
         <td colspan="3">
             <div id="wrapper">
@@ -343,9 +350,9 @@
             </div>
             <div id="blocklyDiv" style="position: absolute"></div>
         </td>
-    </tr>
+    </tr> <!--Blockly Main-->
     <tr>
-        <td style="width:100%;padding-top:20px">
+        <td style="width:80%;padding-top:20px">
                 <div class="panel panel-default" style="float:left">
                     <div class="panel-heading" role="tab" style="height:34px; padding-top: 6px; resize: auto">
                         <table>
@@ -364,11 +371,23 @@
                     </div>
                 </div>
         </td>
-        <td class="text-center" style="width:40%;">
+
+        <td class="text-center" style="width:40%">
             Mode:
             <strong id="vehicle_driving_mode_status">ESTOPPED!</strong>
         </td>
+    </tr> <!--Status Indicator-->
+</table>
+<table style="width:100%">
+    <tr>
+        <td><strong>Select Image to View:</strong></td>
+        <td>Dropdown Menu</td><!--TODO-->
+        <td>
+            CV Status:
+            <strong id="cv_status">Waiting!</strong>
+        </td>
     </tr>
+    <tr><td><div class="cvOuput"><canvas id="cvCanvas"></canvas></div></td></tr>
 </table>
 <script type="text/javascript"> //! Blockly Inject
     var blocklyArea = document.getElementById('blocklyArea');

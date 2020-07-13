@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 Blockly.Blocks["move"] = {
   init: function () {
     this.appendDummyInput().appendField("        Drive Vehicle");
