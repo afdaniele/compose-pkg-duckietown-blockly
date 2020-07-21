@@ -12,11 +12,11 @@ $vehicle_name = Duckiebot::getDuckiebotName();
 ?>
 
 <style type="text/css">
-    body > #page_container {
+    #page_container {
         min-width: 96%;
     }
 
-    body > #page_container > #page_canvas {
+    #page_container > #page_canvas {
         margin-bottom: 0;
     }
 
