@@ -1,15 +1,15 @@
 {
-    "name" : "Duckietown - Blockly",
-    "description" : "Provides functionalities for controlling a Duckiebot using ROS",
-    "core" : {
-        "namespace" : "duckietown_blockly",
-        "file" : "DuckietownBlockly.php",
-        "class" : "DuckietownBlockly"
+    "name": "Duckietown - Blockly",
+    "description": "Provides functionalities for controlling a Duckiebot using ROS",
+    "core": {
+        "namespace": "duckietown_blockly",
+        "file": "DuckietownBlockly.php",
+        "class": "DuckietownBlockly"
     },
-    "dependencies" : {
-        "system-packages" : [],
-        "packages" : [
-          "duckietown_duckiebot"
+    "dependencies": {
+        "system-packages": [],
+        "packages": [
+            "duckietown_duckiebot"
         ]
     }
 }
